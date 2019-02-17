@@ -1,0 +1,56 @@
+def GUI():
+
+    window=Tk()
+
+    window.title("  ROV Copilot system")
+    window.iconbitmap("q.ico")
+    w = 800 # width for the Tk root
+    h = 650 # height for the Tk root
+
+    # get screen width and height
+    ws = window.winfo_screenwidth() # width of the screen
+    hs = window.winfo_screenheight() # height of the screen
+
+    # calculate x and y coordinates for the Tk root window
+    x = (ws/2) - (w/2)
+    y = (hs/2) - (h/2)-50
+    window.geometry('%dx%d+%d+%d' % (w, h, x, y))
+    photo = PhotoImage(file="q.gif")
+    #canvas=Canvas(root,width=w,height=h)
+    #canvas.pack()
+    #canvas.create_image(0,0,anchor=NW,image=photo)
+    frame=LabelFrame(window,text="Motor1",padx=5,pady=5)
+    motorTemp=Label(frame,text="temp = ")
+    motorTemp.grid(row=0,column=0)
+    s=StringVar()
+    Temp1=Entry(frame,textvariable=s)
+    s.set(50)
+    Temp1.grid(row=0,column=1)
+
+    motorspeed = Label(frame, text="speed = ")
+    motorspeed.grid(row=1,column=0)
+    s = StringVar()
+    speed1 = Entry(frame, textvariable=s)
+    s.set(50)
+    speed1.grid(row=1,column=1)
+    frame.grid(row=0,column=0)
+
+    frame2 = LabelFrame(window, text="Motor2", padx=5, pady=5)
+    frame3 = LabelFrame(window, text=" ",bd=0, padx=5, pady=5)
+    motorTemp2 = Label(frame2, text="temp = ")
+    motorTemp2.grid(row=0, column=0)
+    s = StringVar()
+    Temp2 = Entry(frame2, textvariable=s)
+    s.set(50)
+    Temp2.grid(row=0, column=1)
+    label=Label(frame3,text="                                                                                           ")
+    label.grid()
+    motorspeed2 = Label(frame2, text="speed = ")
+    motorspeed2.grid(row=1, column=0)
+    s = StringVar()
+    speed2 = Entry(frame2, textvariable=s)
+    s.set(50)
+    speed2.grid(row=1, column=1)
+    frame3.grid(row=0,column=1)
+    frame2.grid(row=0,column=2)
+    window.mainloop()
