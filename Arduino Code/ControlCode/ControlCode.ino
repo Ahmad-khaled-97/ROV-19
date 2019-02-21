@@ -34,7 +34,7 @@ void setup() {
   bluerobESC3.attach(bluerobESC3PIN);
   bluerobESC4.attach(bluerobESC4PIN);
   bluerobESC5.attach(bluerobESC5PIN);
-  bluerobESC6.attach(bluerobESC6PIN);
+  bluerobESC6.attach(bluerobESC6PIN);  
   bluerobESC7.attach(bluerobESC7PIN);
 
 
@@ -97,8 +97,8 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500-(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
           bluerobESC7.writeMicroseconds(1500);
       }
      
@@ -125,8 +125,8 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500-(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
           bluerobESC7.writeMicroseconds(1500);
       }
      
@@ -140,8 +140,8 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500+(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
           bluerobESC7.writeMicroseconds(1500);
       }
      
@@ -154,8 +154,8 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500+(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
           bluerobESC7.writeMicroseconds(1500);
           
       }
@@ -170,8 +170,8 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500-(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
           bluerobESC7.writeMicroseconds(1300);
       }
 
@@ -218,7 +218,7 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500-(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds((1500+(100*(speed_-'0'))));
       }
        else if (recv == 'u'){  //if serial receives UP three motors command
         Serial.println(recv);
@@ -231,7 +231,7 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500+(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds((1500-(100*(speed_-'0'))));
           
       }
       delay(30); 
