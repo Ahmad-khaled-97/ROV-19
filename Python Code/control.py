@@ -3,7 +3,7 @@ import serial
 import time
 import cv2
 arduino = serial.Serial("COM11", 9600)
-#stream='rtsp://admin:rov@192.168.1.108:554/cam/realmonitor?channel=4&subtype=0/'
+stream='rtsp://admin:rov@192.168.1.108:554/cam/realmonitor?channel=4&subtype=0/'
 points=[]
 time.sleep(0.1) #give the connection a second to settlen
 Speed=0
@@ -338,21 +338,22 @@ def mouse_callback(event,x,y,flags,data):
 
 #region Joystick
 #-------- Main Program Loop -----------
-#capture = cv2.CaptureFromCAM(stream)
-
+cap = cv2.VideoCapture(stream)
+ret, frame = cap.read()
+cv2.imshow('size',frame)
 while done == False:
-    """"
-    key = cv2.waitKey(1)
+
+    key = cv2.waitKey(0)
     if key & 0xFF == ord('q'):
         break
     elif key & 0xFF == ord('s'):
-        frame=cv2.QueryFrame(capture)
+        ret, frame = cap.read()
         cv2.imshow('size', frame)
         cv2.setMouseCallback('size', mouse_callback)
 
     elif key & 0xFF == ord('d'):
         points = []
-    """
+
     # EVENT PROCESSING STEP
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
