@@ -2,15 +2,15 @@
 
 char recv,speed_;
 char B;
-int resetPin = 7;
+int resetPin = 12;
 
-byte bluerobESC1PIN = 5; //HorizontalRightFront_(R1)
-byte bluerobESC2PIN = 6; //HorizontalRightBack_(R2)
-byte bluerobESC3PIN = 7; //HorizontalLeftFront_(L1)
-byte bluerobESC4PIN = 8; //HorizontalLeftBack_(L2)
-byte bluerobESC5PIN = 2; //VerticalRight_(V1)
-byte bluerobESC6PIN = 3; //VerticalLeft_(V2)
-byte bluerobESC7PIN = 4; //VerticalTail_(V3)
+byte bluerobESC1PIN = 6; //HorizontalRightFront_(R1)
+byte bluerobESC2PIN = 9; //HorizontalRightBack_(R2)
+byte bluerobESC3PIN = 3; //HorizontalLeftFront_(L1)
+byte bluerobESC4PIN = A0; //HorizontalLeftBack_(L2)
+byte bluerobESC5PIN = 11; //VerticalRight_(V1)
+byte bluerobESC6PIN = 5; //VerticalLeft_(V2)
+byte bluerobESC7PIN = 10; //VerticalTail_(V3)
 
 Servo bluerobESC1; 
 Servo bluerobESC2; 
@@ -25,8 +25,8 @@ Servo bluerobESC7;
 void setup() {
   B=0;
   Serial.begin(9600);
-  //Serial.println("Ready");
-   //digitalWrite(resetPin, HIGH);
+  Serial.println("Ready");
+  digitalWrite(resetPin, HIGH);
   
   
   bluerobESC1.attach(bluerobESC1PIN);
@@ -71,7 +71,7 @@ pinMode(resetPin, OUTPUT);
   if(Serial.available()){
     speed_ = Serial.read();
       if(recv == 'F'){   //if serial receives FORWARD command
-          //Serial.println(recv);
+          Serial.println(recv);
 
           
           //Horizontal Motors
@@ -81,14 +81,14 @@ pinMode(resetPin, OUTPUT);
           bluerobESC4.writeMicroseconds((1500+(100*(speed_-'0'))));
 
           //Vertical Motors
-          bluerobESC5.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1500);
+          bluerobESC5.writeMicroseconds(1200);
+          bluerobESC6.writeMicroseconds(1200);
+          bluerobESC7.writeMicroseconds(1500);
       }
       
 
       else if (recv == 'B'){ //if serial receives BACKWARD command
-          //Serial.println(recv);
+          Serial.println(recv);
           
           //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
@@ -99,12 +99,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1300);
           bluerobESC6.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1500);
       }
      
       
       else if(recv == 'S'){ //if serial receives STOP command
-          //Serial.println(recv);
+          Serial.println(recv);
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
           bluerobESC3.writeMicroseconds(1500);
@@ -117,35 +117,67 @@ pinMode(resetPin, OUTPUT);
      
      
       else if (recv == 'R'){  //if serial receives RIGHT command
-          
+          Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
-          bluerobESC2.writeMicroseconds((1500-(100*(speed_-'0'))));
-          bluerobESC3.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC2.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC3.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC4.writeMicroseconds((1500-(100*(speed_-'0'))));
 
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1300);
           bluerobESC6.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1500);
       }
      
       
       else if (recv == 'L'){  //if serial receives LEFT command
+        Serial.println(recv);
          //Horizontal Motors
+          bluerobESC1.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC2.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC3.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC4.writeMicroseconds((1500+(100*(speed_-'0'))));
+
+          //Vertical Motors
+          bluerobESC5.writeMicroseconds(1300);
+          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC7.writeMicroseconds(1500);
+      }
+     
+       else if (recv == 'T'){  //if serial receives RotateRight command
+        Serial.println(recv);
+          //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC2.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC3.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC4.writeMicroseconds((1500+(100*(speed_-'0'))));
+
+          //Vertical Motors
+          bluerobESC5.writeMicroseconds(1300);
+          bluerobESC6.writeMicroseconds(1300);
+          bluerobESC7.writeMicroseconds(1500);
+          
+      }
+      
+      
+      else if (recv == 'O'){  //if serial receives RotateLeft command
+        Serial.println(recv);
+           //Horizontal Motors
+          bluerobESC1.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC2.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC3.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC4.writeMicroseconds((1500-(100*(speed_-'0'))));
 
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1300);
           bluerobESC6.writeMicroseconds(1300);
-          bluerobESC6.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1300);
       }
-     
+
       
       else if (recv == 'U'){  //if serial receives UP command
+        Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -155,12 +187,13 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500+(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC7.writeMicroseconds(1500);
           
       }
       
       
-      else if (recv == 'W'){  //if serial receives DOWN command
+      else if (recv == 'D'){  //if serial receives DOWN command
+        Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -170,16 +203,37 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500-(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC7.writeMicroseconds(1500);
       }
-      
-      
-      /*else if (recv == 'T'){  //if serial receives FORWARDRIGHT command
-        Serial.println(recv);
+
+
+     else if (recv == 'd'){  //if serial receives Down three motors
+      Serial.println(recv);
+          //Horizontal Motors
+          bluerobESC1.writeMicroseconds(1500);
+          bluerobESC2.writeMicroseconds(1500);
+          bluerobESC3.writeMicroseconds(1500);
+          bluerobESC4.writeMicroseconds(1500);
+
+          //Vertical Motors
+          bluerobESC5.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC6.writeMicroseconds((1500-(100*(speed_-'0'))));
+          bluerobESC7.writeMicroseconds(1500);
       }
-      else if (recv == 'E'){  //if serial receives FORWARDLEFT command
+       else if (recv == 'u'){  //if serial receives UP three motors command
         Serial.println(recv);
-      }   */
+          //Horizontal Motors
+          bluerobESC1.writeMicroseconds(1500);
+          bluerobESC2.writeMicroseconds(1500);
+          bluerobESC3.writeMicroseconds(1500);
+          bluerobESC4.writeMicroseconds(1500);
+
+          //Vertical Motors
+          bluerobESC5.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC6.writeMicroseconds((1500+(100*(speed_-'0'))));
+          bluerobESC7.writeMicroseconds(1500);
+          
+      }
       delay(30); 
   }
   /*

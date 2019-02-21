@@ -1,8 +1,11 @@
 import pygame
 import serial
 import time
-arduino = serial.Serial("COM9", 9600)
-time.sleep(0.1) #give the connection a second to settle
+import cv2
+arduino = serial.Serial("COM11", 9600)
+#stream='rtsp://admin:rov@192.168.1.108:554/cam/realmonitor?channel=4&subtype=0/'
+points=[]
+time.sleep(0.1) #give the connection a second to settlen
 Speed=0
 #region streaming
 
@@ -105,6 +108,13 @@ def up_down(hat):
     if hat[1] == -1:
         textPrint.print(screen, "down")
         down(hat)
+    if hat[0] == 1:
+        textPrint.print(screen, "down_V3")
+        up_3(hat)
+
+    if hat[0] == -1:
+        textPrint.print(screen, "UP_V3")
+        down_3(hat)
 
 
 def axisDirection(axis,i):
@@ -139,59 +149,73 @@ def axisDirection(axis,i):
 def forward(axis):
     global Speed
     arduino.write(bytes('F', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def back(axis):
     global Speed
     arduino.write(bytes('B', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def left(axis):
     arduino.write(bytes('L', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def right(axis):
     arduino.write(bytes('R', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def up(hat):
     arduino.write(bytes('U', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def down(hat):
-    arduino.write(bytes('W', 'utf8'))
-    time.sleep(0.3)
+    arduino.write(bytes('D', 'utf8'))
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
+    return
+
+def up_3(hat):
+    arduino.write(bytes('u', 'utf8'))
+    time.sleep(0.1)
+    arduino.write(bytes(str(Speed), 'utf8'))
+    time.sleep(0.1)
+    return
+
+def down_3(hat):
+    arduino.write(bytes('b', 'utf8'))
+    time.sleep(0.1)
+    arduino.write(bytes(str(Speed), 'utf8'))
+    time.sleep(0.1)
     return
 
 def forwardRight(axis):
     arduino.write(bytes('T', 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def forwardLeft(axis):
-    arduino.write(bytes('E', 'utf8'))
-    time.sleep(0.3)
+    arduino.write(bytes('O', 'utf8'))
+    time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
-    time.sleep(0.3)
+    time.sleep(0.1)
     return
 
 def speed(axis):
@@ -224,7 +248,7 @@ def controlButtons(button,i):
         textPrint.print(screen, "runMicro")
 
     if button == 1 and i == 8:
-        stopMicro()
+        tail_move()
         textPrint.print(screen, "stopMicro")
 
     if button == 1 and i == 4:
@@ -247,10 +271,12 @@ def openGripper():
     arduino.write(bytes('G', 'utf8'))
     time.sleep(0.1)
     return
+
 def restart():
     arduino.write(bytes('r', 'utf8'))
     time.sleep(0.1)
     return
+
 def closeGripper():
     arduino.write(bytes('g', 'utf8'))
     time.sleep(0.1)
@@ -271,8 +297,8 @@ def runMicro():
     time.sleep(0.1)
     return
 
-def stopMicro():
-    arduino.write(bytes('m', 'utf8'))
+def tail_move():
+    arduino.write(bytes('b', 'utf8'))
     time.sleep(0.1)
     return
 
@@ -287,7 +313,7 @@ def  screenshot():
     return
 
 def detectmetal():
-    arduino.write(bytes('D', 'utf8'))
+    arduino.write(bytes('m', 'utf8'))
     time.sleep(0.1)
     return
 
@@ -297,12 +323,36 @@ def calculateshapes():
     return
 #endregion
 
+laser_realsize=3.35
+object_realsize=-1
+def mouse_callback(event,x,y,flags,data):
+    global points
+    if event==cv2.EVENT_LBUTTONDOWN and len(points)<4:
+        points.append(x)
+    elif len(points)==4:
+        laser_Size=abs(points[1]-points[0])
+        object_size=abs(points[3]-points[2])
+        object_realsize=(object_size/laser_Size) * laser_realsize
+        print(str(object_realsize)+' CM')
+        points=[]
 
 #region Joystick
 #-------- Main Program Loop -----------
+#capture = cv2.CaptureFromCAM(stream)
+
 while done == False:
+    """"
+    key = cv2.waitKey(1)
+    if key & 0xFF == ord('q'):
+        break
+    elif key & 0xFF == ord('s'):
+        frame=cv2.QueryFrame(capture)
+        cv2.imshow('size', frame)
+        cv2.setMouseCallback('size', mouse_callback)
 
-
+    elif key & 0xFF == ord('d'):
+        points = []
+    """
     # EVENT PROCESSING STEP
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
