@@ -198,7 +198,7 @@ def up_3(hat):
     return
 
 def down_3(hat):
-    arduino.write(bytes('b', 'utf8'))
+    arduino.write(bytes('d', 'utf8'))
     time.sleep(0.1)
     arduino.write(bytes(str(Speed), 'utf8'))
     time.sleep(0.1)
