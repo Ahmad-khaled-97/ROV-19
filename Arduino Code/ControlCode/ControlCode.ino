@@ -61,7 +61,7 @@ pinMode(resetPin, OUTPUT);
     
     recv = Serial.read();
     if (recv == 'r'){  
-        Serial.println(recv);
+       // Serial.println(recv);
          digitalWrite(resetPin, LOW);
       }
     delay(30);
@@ -71,7 +71,7 @@ pinMode(resetPin, OUTPUT);
   if(Serial.available()){
     speed_ = Serial.read();
       if(recv == 'F'){   //if serial receives FORWARD command
-          Serial.println(recv);
+          //Serial.println(recv);
 
           
           //Horizontal Motors
@@ -83,12 +83,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
       }
       
 
       else if (recv == 'B'){ //if serial receives BACKWARD command
-          Serial.println(recv);
+         // Serial.println(recv);
           
           //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
@@ -99,12 +99,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
       }
      
       
       else if(recv == 'S'){ //if serial receives STOP command
-          Serial.println(recv);
+         // Serial.println(recv);
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
           bluerobESC3.writeMicroseconds(1500);
@@ -117,7 +117,7 @@ pinMode(resetPin, OUTPUT);
      
      
       else if (recv == 'R'){  //if serial receives RIGHT command
-          Serial.println(recv);
+         // Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC2.writeMicroseconds((1500+(100*(speed_-'0'))));
@@ -127,12 +127,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
       }
      
       
       else if (recv == 'L'){  //if serial receives LEFT command
-        Serial.println(recv);
+       // Serial.println(recv);
          //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC2.writeMicroseconds((1500-(100*(speed_-'0'))));
@@ -142,11 +142,11 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
       }
      
        else if (recv == 'T'){  //if serial receives RotateRight command
-        Serial.println(recv);
+      //  Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC2.writeMicroseconds((1500-(100*(speed_-'0'))));
@@ -156,13 +156,13 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
           
       }
       
       
       else if (recv == 'O'){  //if serial receives RotateLeft command
-        Serial.println(recv);
+       // Serial.println(recv);
            //Horizontal Motors
           bluerobESC1.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC2.writeMicroseconds((1500+(100*(speed_-'0'))));
@@ -172,12 +172,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds(1200);
           bluerobESC6.writeMicroseconds(1200);
-          bluerobESC7.writeMicroseconds(1300);
+          bluerobESC7.writeMicroseconds(1650);
       }
 
       
       else if (recv == 'U'){  //if serial receives UP command
-        Serial.println(recv);
+      //  Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -187,13 +187,13 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500+(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500+(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1400);
           
       }
       
       
       else if (recv == 'D'){  //if serial receives DOWN command
-        Serial.println(recv);
+        //Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -203,12 +203,12 @@ pinMode(resetPin, OUTPUT);
           //Vertical Motors
           bluerobESC5.writeMicroseconds((1500-(100*(speed_-'0'))));
           bluerobESC6.writeMicroseconds((1500-(100*(speed_-'0'))));
-          bluerobESC7.writeMicroseconds(1500);
+          bluerobESC7.writeMicroseconds(1650);
       }
 
 
      else if (recv == 'd'){  //if serial receives Down three motors
-      Serial.println(recv);
+     // Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -221,7 +221,7 @@ pinMode(resetPin, OUTPUT);
           bluerobESC7.writeMicroseconds((1500+(100*(speed_-'0'))));
       }
        else if (recv == 'u'){  //if serial receives UP three motors command
-        Serial.println(recv);
+       // Serial.println(recv);
           //Horizontal Motors
           bluerobESC1.writeMicroseconds(1500);
           bluerobESC2.writeMicroseconds(1500);
@@ -242,7 +242,7 @@ pinMode(resetPin, OUTPUT);
       }
       else if (recv == 'g'){  //if serial receives CLOSE GRIPPER command, Run those ESCs with these speeds "pwm signals"
         Serial.println(recv);
-      }
+      }s
       else if (recv == 'D'){  //if serial receives DETECTED METAL command
         Serial.println(recv);
       }
